@@ -1,26 +1,54 @@
-# Prompt Log — ISBA 2438 A2 Part 1
+# PROMPT_LOG — 2026-11-09
 
-> Entries 1–2 record what actually happened on 2026-11-09.
+会话工具：Viber（CLI 编程助手）。本次会话共 3 条有效 prompt，按顺序记录如下。
 
-## 1. Viber setup failed — invalid key
+## 环境说明
 
-- **My prompt:** Prompt 1 (scaffold the Next.js site with `/`, `/about-me`, `/projects`, `/projects/[slug]`, `/contact-me-server-form`), and later a plain `hi` to test the connection.
-- **What Viber did:** Both times it returned "This HackerCode AI key is invalid. Check the key or create a new one." No code was generated.
-- **My decision + why:** I got a key from VibeCoach (Account → AI access) and looked for a place to enter it. Settings → Providers only showed "Viber AI" with a Disconnect button. After I disconnected and restarted the app, there was no way to reconnect or enter a key. I reported it to the instructor / VibeCoach ("I'm stuck") rather than keep guessing. I emailed Prof. Adam Chan on 2026-11-09 at 12:09 PT from jzhan@scu.edu, subject "ISBA 2438 Assignment 2 Part 1 — Viber is not working for me", saying Viber was installed but would not connect and asking if I could use another coding agent for Part 1 or another way to complete the Viber prompt part. No reply yet as of 2026-11-09 13:08 PT.
-- **Files / commit:** none (no code produced).
-- **Check + result:** Sent `hi` after the change and still got the invalid-key error. Restarting Viber didn't help either.
+- 今天会话开始时，Viber 1.20.7 报 invalid key，无法正常使用；切换到 Viber 1.20.10 之后才能正常对话。本日志中的 3 条 prompt 均在 1.20.10 下完成。
 
-## 2. Switched to Claude to build the site
+## Prompt 1 — 检查项目页面与路由
 
-- **My prompt:** "不采用viber了，你直接按要求做吧" (Drop Viber, build it to the requirements directly.) The requirements were my own Prompts 1–5.
-- **What the AI proposed:** A Next.js App Router project. Project data lives in `data/projects.js` with one entry per slug. Unknown slugs call `notFound()`, which shows a friendly page. The contact form posts to a server action. Validation is in `server/validateContact.js` and saving to `data/contacts.json` is in `server/contactStore.js`. Success and error states are separate green and red banners.
-- **My decision + why:** I accepted this because Viber was blocked and the deadline was that night. After reviewing, I changed data/projects.js: removed the AI agent / Gemini wording. The summary now says the deli CLI manages products, stock, and the customer queue, with JSON storage; the stack is Python and JSON storage; I removed the AI agent detail line.
-- **Files / commit:** whole project. 903826ddfd401d7167f306b77a3afd1c67c13075
-- **Check + result:** The AI ran `npm test` (5 tests pass: empty name, empty message and bad emails are rejected, and valid entries are appended with `submittedAt`). It also rendered each page and checked that both slugs show different content and that `/projects/does-not-exist` shows the not-found page. On my Mac after npm run dev, I opened localhost:3000 and checked /, /about-me, /projects, /projects/smoked-food-cli, /projects/california-ev-dashboard, and /projects/does-not-exist (not-found page). A valid contact submission (Jianing Zhan / jzhan@scu.edu) appeared in data/contacts.json with submittedAt 2026-11-09T21:06:10.561Z.
+> 请检查这个文件夹里的 Next.js 作品集项目，列出它有哪些页面和路由，确认一下有没有首页、About Me、Projects（带动态项目页）、还有联系表单页。
 
-## 3. Server-side validation vs. browser validation
+时间：2026-11-09，下午（本条未留下精确时间记录）。
 
-- **What the AI proposed:** Put `noValidate` on the form so the browser's built-in email check doesn't stop the submission. Then the server's validation and error messages are what the user actually sees.
-- **My decision + why:** Keep it, because otherwise the browser built-in email check would stop an invalid email before it reaches the server, and the server validation and error messages would not be shown.
-- **Files / commit:** `components/ContactForm.js`. 903826ddfd401d7167f306b77a3afd1c67c13075
-- **Check + result:** Invalid submission (empty name, joy@, empty message) showed red "✗ Not sent" with: "Please enter your name." / "Please enter a valid email address, like name@example.com." / "Please enter a message." A valid submission showed green "✓ Message sent" and cleared the form.
+结果：当前工作目录 `Viber/ISBA2438` 是空的，助手在 `~/Desktop/isba2438-a2-portfolio` 找到实际项目（Next.js 15，App Router）。确认四部分齐全：
+
+- `/` 首页（`app/page.js`）
+- `/about-me`（`app/about-me/page.js`）
+- `/projects` + `/projects/[slug]` 动态项目页（`generateStaticParams` 预构建，未知 slug 走 `not-found.js`）
+- `/contact-me-server-form` 联系表单（Server Action 提交）
+
+另有 `layout.js`、`not-found.js`、`NavBar` / `ContactForm` / `ProjectCard` 组件、`data/projects.js`、`server/` 校验与存储、`tests/contact.test.mjs`。
+
+## Prompt 2 — 检查联系表单页
+
+> 请检查联系表单页 /contact-me-server-form，确认一下：表单有没有姓名、邮箱、消息这三个带标签的输入框，是不是用 Server Action 提交，服务端会不会拒绝空姓名、空消息和格式错的邮箱，有没有成功和失败的不同提示，成功后是不是存到 data/contacts.json。
+
+时间：2026-11-09，下午（本条未留下精确时间记录）。
+
+结果：五点全部确认——
+
+1. Name / Email / Message 三个输入框均有 `<label htmlFor>`（`components/ContactForm.js`），带 `aria-invalid` / `aria-describedby`。
+2. Server Action 提交：`actions.js` 标 `"use server"`，客户端用 `useActionState` + `<form action={formAction}>`。
+3. 服务端校验（`server/validateContact.js`）拒绝空姓名、空消息，邮箱用正则拒绝空值和格式错误（表单 `noValidate` 让服务端校验生效）。
+4. 成功显示绿色 "✓ Message sent."（`role="status"`），失败显示红色 "✗ Not sent."（`role="alert"`），字段下方有具体错误文案，失败保留已输入内容。
+5. 成功后 `server/contactStore.js` 追加含 `submittedAt` 的记录到 `data/contacts.json`。
+
+运行 `npm test`：5/5 通过（空姓名拒绝、空消息拒绝、邮箱格式拒绝、saveContact 追加等用例）。
+
+## Prompt 3 — 运行构建并检查动态路由
+
+> 请运行 npm run build，确认构建成功，并检查 /projects/[slug] 动态路由：两个项目 smoked-food-cli 和 california-ev-dashboard 是不是用同一个动态路由、显示不同内容，未知 slug 会不会走到 not-found。
+
+时间：2026-11-09，约 18:27–18:30（依据 /tmp 下服务器日志的创建时间）。
+
+结果：
+
+- `npm run build` 编译成功，生成 9 个静态页，其中 `/projects/[slug]` 为 SSG，预渲染 `/projects/smoked-food-cli` 和 `/projects/california-ev-dashboard` 两个路径。
+- 首次 `next start` 验证时失败：`Cannot find module './477.js'`。原因是 `.next` 目录混入了 dev 服务器的产物；3000 端口当时被另一个 Next 进程占用（排查过程中执行过 `pkill`，如果那是用户自己开的 dev 服务器需要重启）。`rm -rf .next` 清理重建后恢复正常。
+- 用生产服务器（3100 端口）实测：
+  - `/projects/smoked-food-cli` → 200，标题 "Northeastern Smoked Food — Deli Queue & Inventory CLI"
+  - `/projects/california-ev-dashboard` → 200，标题 "California EV Adoption Dashboard"
+  - 两个项目确认共用同一个 `[slug]` 动态路由、渲染各自不同内容。
+  - `/projects/does-not-exist` → 404，渲染 "Project not found" + "See all projects"。
