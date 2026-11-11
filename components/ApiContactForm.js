@@ -1,17 +1,9 @@
 "use client";
 
 import { useState } from "react";
+import FieldError from "@/components/FieldError";
 
 const EMPTY_FORM = { name: "", email: "", message: "" };
-
-function FieldError({ id, text }) {
-  if (!text) return null;
-  return (
-    <p id={id} className="field-error">
-      {text}
-    </p>
-  );
-}
 
 export default function ApiContactForm() {
   const [values, setValues] = useState(EMPTY_FORM);

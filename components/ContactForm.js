@@ -3,6 +3,7 @@
 import { useActionState } from "react";
 import { useFormStatus } from "react-dom";
 import { submitContact } from "@/app/contact-me-server-form/actions";
+import FieldError from "@/components/FieldError";
 
 const initialState = {
   id: 0,
@@ -18,15 +19,6 @@ function SubmitButton() {
     <button type="submit" className="button" disabled={pending}>
       {pending ? "Sending..." : "Send message"}
     </button>
-  );
-}
-
-function FieldError({ id, text }) {
-  if (!text) return null;
-  return (
-    <p id={id} className="field-error">
-      {text}
-    </p>
   );
 }
 
