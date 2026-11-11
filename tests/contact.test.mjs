@@ -33,6 +33,24 @@ test("invalid email format is rejected", () => {
   }
 });
 
+test("empty domain segment: joy@.example.com is rejected", () => {
+  const result = validateContact({ name: "Joy", email: "joy@.example.com", message: "Hello" });
+  assert.equal(result.isValid, false);
+  assert.ok(result.errors.email);
+});
+
+test("empty domain segment: joy@example..com is rejected", () => {
+  const result = validateContact({ name: "Joy", email: "joy@example..com", message: "Hello" });
+  assert.equal(result.isValid, false);
+  assert.ok(result.errors.email);
+});
+
+test("empty domain segment: joy@example.com. is rejected", () => {
+  const result = validateContact({ name: "Joy", email: "joy@example.com.", message: "Hello" });
+  assert.equal(result.isValid, false);
+  assert.ok(result.errors.email);
+});
+
 test("saveContact appends entries with submittedAt", async () => {
   const dir = await mkdtemp(path.join(tmpdir(), "contacts-"));
   const file = path.join(dir, "contacts.json");

@@ -1,7 +1,20 @@
 // Server-side validation for the contact form.
 // Pure function (no file system access) so it is easy to test.
 
-const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+function isValidEmail(email) {
+  if (/\s/.test(email)) return false;
+
+  const parts = email.split("@");
+  if (parts.length !== 2) return false;
+
+  const [local, domain] = parts;
+  if (!local) return false;
+
+  const segments = domain.split(".");
+  if (segments.length < 2) return false;
+
+  return segments.every((segment) => segment !== "");
+}
 
 export function validateContact({ name, email, message }) {
   const cleaned = {
@@ -16,7 +29,7 @@ export function validateContact({ name, email, message }) {
   }
   if (!cleaned.email) {
     errors.email = "Please enter your email.";
-  } else if (!EMAIL_PATTERN.test(cleaned.email)) {
+  } else if (!isValidEmail(cleaned.email)) {
     errors.email = "Please enter a valid email address, like name@example.com.";
   }
   if (!cleaned.message) {

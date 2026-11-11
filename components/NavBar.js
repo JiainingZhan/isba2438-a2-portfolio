@@ -5,6 +5,7 @@ const links = [
   { href: "/about-me", label: "About Me" },
   { href: "/projects", label: "My Projects" },
   { href: "/contact-me-server-form", label: "Contact Me" },
+  { href: "/contact-me", label: "Contact Me (API)" },
 ];
 
 export default function NavBar() {
