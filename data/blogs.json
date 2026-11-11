@@ -1,0 +1,14 @@
+[
+  {
+    "slug": "hello-world",
+    "title": "Hello World",
+    "content": "Welcome to my blog! This is the first post, where I say hello and explain what I plan to write about: data, code, and class projects.",
+    "createdAt": "2026-11-01T09:00:00.000Z"
+  },
+  {
+    "slug": "why-i-love-sql",
+    "title": "Why I Love SQL",
+    "content": "A short reflection after ISBA 2438: a few lines of SQL can answer questions that would take hours by hand. Queries, joins, and group-bys explained with examples from class.",
+    "createdAt": "2026-11-05T14:30:00.000Z"
+  }
+]

@@ -8,7 +8,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "test": "node --test tests/contact.test.mjs"
+    "test": "node --test tests/"
   },
   "dependencies": {
     "next": "^15.3.0",
