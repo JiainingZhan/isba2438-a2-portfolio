@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import MenuItemCard from "@/components/MenuItemCard";
+import QueueTicket from "@/components/QueueTicket";
 
 function MenuGroup({ title, items }) {
   if (items.length === 0) return null;
@@ -47,17 +48,21 @@ export default function DeliMenu() {
   }
 
   const available = items.filter((item) => item.availableToday);
-  if (available.length === 0) {
-    return <p>Nothing is available today — please check back tomorrow.</p>;
-  }
-
   const sausage = available.filter((item) => item.category === "sausage");
   const smoked = available.filter((item) => item.category === "smoked");
 
   return (
     <div>
-      <MenuGroup title="Sausages" items={sausage} />
-      <MenuGroup title="Smoked specials" items={smoked} />
+      <QueueTicket items={available} />
+
+      {available.length === 0 ? (
+        <p>Nothing is available today — please check back tomorrow.</p>
+      ) : (
+        <>
+          <MenuGroup title="Sausages" items={sausage} />
+          <MenuGroup title="Smoked specials" items={smoked} />
+        </>
+      )}
     </div>
   );
 }
