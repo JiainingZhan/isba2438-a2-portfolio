@@ -1,11 +1,11 @@
 // Run with: npm test
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { mkdtemp, readFile } from "node:fs/promises";
+import { mkdtemp, readFile, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { validateContact } from "../server/validateContact.js";
-import { saveContact } from "../server/contactStore.js";
+import { saveContact, loadContacts } from "../server/contactStore.js";
 
 test("valid submission passes", () => {
   const result = validateContact({ name: "Joy", email: "joy@example.com", message: "Hello" });
@@ -60,4 +60,35 @@ test("saveContact appends entries with submittedAt", async () => {
   assert.equal(saved.length, 2);
   assert.equal(saved[1].name, "B");
   assert.ok(!Number.isNaN(Date.parse(saved[0].submittedAt)));
+});
+
+test("saveContact assigns a unique id to each entry", async () => {
+  const dir = await mkdtemp(path.join(tmpdir(), "contacts-"));
+  const file = path.join(dir, "contacts.json");
+  const one = await saveContact({ name: "A", email: "a@x.com", message: "one" }, file);
+  const two = await saveContact({ name: "B", email: "b@x.com", message: "two" }, file);
+  assert.equal(one.id, 1);
+  assert.equal(two.id, 2);
+});
+
+test("loadContacts backfills missing ids and persists them", async () => {
+  const dir = await mkdtemp(path.join(tmpdir(), "contacts-"));
+  const file = path.join(dir, "contacts.json");
+  await writeFile(
+    file,
+    JSON.stringify([
+      { name: "Old One", email: "o1@x.com", message: "hi", submittedAt: "2026-01-01T00:00:00.000Z" },
+      { name: "Old Two", email: "o2@x.com", message: "yo", submittedAt: "2026-01-02T00:00:00.000Z" },
+    ])
+  );
+
+  const loaded = await loadContacts(file);
+  assert.equal(loaded.length, 2);
+  assert.equal(loaded[0].id, 1);
+  assert.equal(loaded[1].id, 2);
+  assert.equal(loaded[0].name, "Old One");
+
+  const persisted = JSON.parse(await readFile(file, "utf8"));
+  assert.equal(persisted[0].id, 1);
+  assert.equal(persisted[1].id, 2);
 });
