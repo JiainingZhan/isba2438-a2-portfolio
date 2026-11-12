@@ -282,3 +282,38 @@ code {
     font-size: 1.7rem;
   }
 }
+
+/* Deli menu table */
+.menu-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+.menu-table th,
+.menu-table td {
+  text-align: left;
+  padding: 0.5rem 0.6rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.menu-table th {
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.menu-available {
+  color: var(--success-text);
+  background: var(--success-bg);
+  border-radius: 999px;
+  padding: 0.1rem 0.6rem;
+  font-size: 0.85rem;
+}
+
+.menu-soldout {
+  color: var(--error-text);
+  background: var(--error-bg);
+  border-radius: 999px;
+  padding: 0.1rem 0.6rem;
+  font-size: 0.85rem;
+}
