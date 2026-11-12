@@ -1,21 +1,23 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { projects, getProjectBySlug } from "@/data/projects";
+import { loadProjects } from "@/server/projectStore";
 
-// Pre-build the two known project pages.
-export function generateStaticParams() {
-  return projects.map((project) => ({ slug: project.slug }));
+export const dynamic = "force-dynamic";
+
+async function getProjectBySlug(slug) {
+  const projects = await loadProjects();
+  return projects.find((project) => project.slug === slug) ?? null;
 }
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
-  const project = getProjectBySlug(slug);
+  const project = await getProjectBySlug(slug);
   return { title: project ? `${project.title} — Joy (Jianing Zhan)` : "Project not found" };
 }
 
 export default async function ProjectDetailPage({ params }) {
   const { slug } = await params;
-  const project = getProjectBySlug(slug);
+  const project = await getProjectBySlug(slug);
 
   // Unknown slug → show app/projects/[slug]/not-found.js instead of crashing.
   if (!project) {

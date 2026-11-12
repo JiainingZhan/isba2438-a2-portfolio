@@ -2,6 +2,8 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { loadBlogs } from "@/server/blogStore";
 
+export const dynamic = "force-dynamic";
+
 function formatDate(isoDate) {
   return new Date(isoDate).toLocaleDateString("en-US", {
     year: "numeric",

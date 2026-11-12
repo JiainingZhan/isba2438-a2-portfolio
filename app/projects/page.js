@@ -1,9 +1,12 @@
 import ProjectCard from "@/components/ProjectCard";
-import { projects } from "@/data/projects";
+import { loadProjects } from "@/server/projectStore";
+
+export const dynamic = "force-dynamic";
 
 export const metadata = { title: "My Projects — Joy (Jianing Zhan)" };
 
-export default function ProjectsPage() {
+export default async function ProjectsPage() {
+  const projects = await loadProjects();
   return (
     <section>
       <h1>My Projects</h1>
