@@ -1,0 +1,110 @@
+[
+  {
+    "id": 1,
+    "name": "Corn Sausage",
+    "category": "sausage",
+    "unit": "lb",
+    "price": 15,
+    "stock": 20,
+    "availableToday": true
+  },
+  {
+    "id": 2,
+    "name": "Garlic Sausage",
+    "category": "sausage",
+    "unit": "lb",
+    "price": 15,
+    "stock": 15,
+    "availableToday": true
+  },
+  {
+    "id": 3,
+    "name": "Pork Rib Sausage",
+    "category": "sausage",
+    "unit": "lb",
+    "price": 15,
+    "stock": 12,
+    "availableToday": true
+  },
+  {
+    "id": 4,
+    "name": "Signature Large-Cut Pork Sausage",
+    "category": "sausage",
+    "unit": "lb",
+    "price": 15,
+    "stock": 8,
+    "availableToday": true
+  },
+  {
+    "id": 5,
+    "name": "Smoked Rooster",
+    "category": "smoked",
+    "unit": "ea",
+    "price": 32,
+    "stock": 6,
+    "availableToday": true
+  },
+  {
+    "id": 6,
+    "name": "Smoked Hen",
+    "category": "smoked",
+    "unit": "ea",
+    "price": 16,
+    "stock": 10,
+    "availableToday": true
+  },
+  {
+    "id": 7,
+    "name": "Smoked Pig's Trotters",
+    "category": "smoked",
+    "unit": "ea",
+    "price": 11,
+    "stock": 9,
+    "availableToday": true
+  },
+  {
+    "id": 8,
+    "name": "Smoked Beef Shank",
+    "category": "smoked",
+    "unit": "lb",
+    "price": 28,
+    "stock": 25,
+    "availableToday": true
+  },
+  {
+    "id": 9,
+    "name": "Sweet & Spicy Duck Neck",
+    "category": "smoked",
+    "unit": "lb",
+    "price": 24,
+    "stock": 18,
+    "availableToday": true
+  },
+  {
+    "id": 10,
+    "name": "Mala Duck Neck",
+    "category": "smoked",
+    "unit": "lb",
+    "price": 20,
+    "stock": 5,
+    "availableToday": true
+  },
+  {
+    "id": 11,
+    "name": "Sweet & Sour Duck Wings",
+    "category": "smoked",
+    "unit": "lb",
+    "price": 22,
+    "stock": 22,
+    "availableToday": true
+  },
+  {
+    "id": 12,
+    "name": "Smoked Chicken Feet",
+    "category": "smoked",
+    "unit": "lb",
+    "price": 20,
+    "stock": 30,
+    "availableToday": true
+  }
+]
