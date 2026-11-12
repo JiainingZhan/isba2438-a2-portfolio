@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from "react";
 import FieldError from "@/components/FieldError";
+import StatusAlert from "@/components/StatusAlert";
+import { formatMoney } from "@/lib/format";
 
 const EMPTY_FORM = {
   name: "",
@@ -159,16 +161,11 @@ export default function MenuAdmin() {
 
   return (
     <div>
-      {notice && (
-        <div className="alert alert-success" role="status">
-          {notice}
-        </div>
-      )}
-      {actionFailed && (
-        <div className="alert alert-error" role="alert">
-          The last action failed. Please try again.
-        </div>
-      )}
+      <StatusAlert type="success" text={notice} />
+      <StatusAlert
+        type="error"
+        text={actionFailed ? "The last action failed. Please try again." : null}
+      />
 
       <table className="menu-table">
         <thead>
@@ -187,7 +184,7 @@ export default function MenuAdmin() {
               <td>{item.name}</td>
               <td>{item.category}</td>
               <td>
-                ${Number(item.price).toFixed(2)} / {item.unit}
+                {formatMoney(item.price)} / {item.unit}
               </td>
               <td>
                 {item.stock} {item.unit}

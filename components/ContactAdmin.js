@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from "react";
 import FieldError from "@/components/FieldError";
+import StatusAlert from "@/components/StatusAlert";
+import { formatDateTime } from "@/lib/format";
 
 const EMPTY_FORM = { name: "", email: "", message: "" };
 
@@ -113,23 +115,18 @@ export default function ContactAdmin() {
 
   return (
     <div>
-      {notice && (
-        <div className="alert alert-success" role="status">
-          {notice}
-        </div>
-      )}
-      {actionFailed && (
-        <div className="alert alert-error" role="alert">
-          The last action failed. Please try again.
-        </div>
-      )}
+      <StatusAlert type="success" text={notice} />
+      <StatusAlert
+        type="error"
+        text={actionFailed ? "The last action failed. Please try again." : null}
+      />
 
       <div className="card-list">
         {contacts.map((contact) => (
           <article key={contact.id} className="card">
             <h2>{contact.name}</h2>
             <p className="subheading">
-              #{contact.id} · {new Date(contact.submittedAt).toLocaleString()} · {contact.email}
+              #{contact.id} · {formatDateTime(contact.submittedAt)} · {contact.email}
             </p>
             <p>{contact.message}</p>
             <div className="button-row">

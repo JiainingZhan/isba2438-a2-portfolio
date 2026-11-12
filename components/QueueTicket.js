@@ -2,15 +2,12 @@
 
 import { useEffect, useState } from "react";
 import { loadTicket, saveTicket, clearTicket, nextQueueNumber } from "@/lib/ticketStorage";
+import { formatMoney, formatDateTime } from "@/lib/format";
 
 function isValidQuantity(quantity, unit) {
   if (!Number.isFinite(quantity) || quantity <= 0) return false;
   if (unit === "ea") return Number.isInteger(quantity);
   return Math.round(quantity * 100) % 25 === 0;
-}
-
-function formatMoney(amount) {
-  return `$${amount.toFixed(2)}`;
 }
 
 export default function QueueTicket({ items }) {
@@ -78,7 +75,7 @@ export default function QueueTicket({ items }) {
         <div>
           <p>
             <strong>Your number: {ticket.queueNumber}</strong>
-            <span className="subheading"> · taken {new Date(ticket.createdAt).toLocaleString()}</span>
+            <span className="subheading"> · taken {formatDateTime(ticket.createdAt)}</span>
           </p>
           <ul>
             {ticket.items.map((entry) => {

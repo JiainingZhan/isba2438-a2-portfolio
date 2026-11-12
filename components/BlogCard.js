@@ -1,12 +1,5 @@
 import Link from "next/link";
-
-function formatDate(isoDate) {
-  return new Date(isoDate).toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
-}
+import { formatDate } from "@/lib/format";
 
 export default function BlogCard({ blog }) {
   return (

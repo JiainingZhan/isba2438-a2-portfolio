@@ -1,9 +1,11 @@
+import { formatMoney } from "@/lib/format";
+
 export default function MenuItemCard({ item }) {
   return (
     <article className="card">
       <h3>{item.name}</h3>
       <p className="menu-price">
-        ${Number(item.price).toFixed(2)} / {item.unit}
+        {formatMoney(item.price)} / {item.unit}
       </p>
       <p className="subheading">
         In stock: {item.stock} {item.unit}

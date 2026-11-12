@@ -1,16 +1,9 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { loadBlogs } from "@/server/blogStore";
+import { formatDate } from "@/lib/format";
 
 export const dynamic = "force-dynamic";
-
-function formatDate(isoDate) {
-  return new Date(isoDate).toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
-}
 
 async function getBlogBySlug(slug) {
   const blogs = await loadBlogs();

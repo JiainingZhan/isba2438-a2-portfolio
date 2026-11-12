@@ -8,6 +8,7 @@ const links = [
   { href: "/deli", label: "Deli" },
   { href: "/contact-me-server-form", label: "Contact Me" },
   { href: "/contact-me", label: "Contact Me (API)" },
+  { href: "/admin", label: "Admin" },
 ];
 
 export default function NavBar() {

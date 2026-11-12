@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import FieldError from "@/components/FieldError";
+import StatusAlert from "@/components/StatusAlert";
 
 const EMPTY_FORM = {
   title: "",
@@ -150,16 +151,11 @@ export default function ProjectAdmin() {
 
   return (
     <div>
-      {notice && (
-        <div className="alert alert-success" role="status">
-          {notice}
-        </div>
-      )}
-      {actionFailed && (
-        <div className="alert alert-error" role="alert">
-          The last action failed. Please try again.
-        </div>
-      )}
+      <StatusAlert type="success" text={notice} />
+      <StatusAlert
+        type="error"
+        text={actionFailed ? "The last action failed. Please try again." : null}
+      />
 
       <div className="card-list">
         {projects.map((project) => (
