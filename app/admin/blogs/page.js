@@ -1,16 +1,16 @@
-import BlogForm from "@/components/BlogForm";
+import BlogAdmin from "@/components/BlogAdmin";
 
-export const metadata = { title: "New Blog Post — Joy (Jianing Zhan)" };
+export const metadata = { title: "Blog Admin — Joy (Jianing Zhan)" };
 
 export default function AdminBlogsPage() {
   return (
     <section>
-      <h1>New Blog Post</h1>
+      <h1>Blog Admin</h1>
       <p>
-        Write a post and publish it. This form posts to the <code>/api/blogs</code> route handler,
-        which validates on the server and saves to <code>data/blogs.json</code>.
+        Publish new posts, then edit or remove existing ones. Everything goes through the{" "}
+        <code>/api/blogs</code> route handlers and saves to <code>data/blogs.json</code>.
       </p>
-      <BlogForm />
+      <BlogAdmin />
     </section>
   );
 }

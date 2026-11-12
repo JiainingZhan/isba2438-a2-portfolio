@@ -23,11 +23,7 @@ export async function loadBlogs(filePath = DEFAULT_FILE) {
   return readBlogs(filePath);
 }
 
-export async function saveBlog(entry, filePath = DEFAULT_FILE) {
-  const blogs = await readBlogs(filePath);
-  blogs.push(entry);
-
+export async function saveBlogs(blogs, filePath = DEFAULT_FILE) {
   await fs.mkdir(path.dirname(filePath), { recursive: true });
   await fs.writeFile(filePath, JSON.stringify(blogs, null, 2) + "\n", "utf8");
-  return entry;
 }
